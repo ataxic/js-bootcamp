@@ -2,10 +2,10 @@
 const getSavedNotes = () => {
     
     const notesJSON = localStorage.getItem('notes')
-    
-    if (notesJSON !== null) { 
-        return JSON.parse(notesJSON)
-    } else {
+
+    try {
+        return notesJSON ? JSON.parse(notesJSON) : []
+    } catch (e) {
         return []
     }
 }
@@ -39,11 +39,7 @@ const generateNoteDOM = (note) => {
     })
 
     // Setup the note title
-    if (note.title.length > 0) {
-        textEl.textContent = note.title
-    } else {
-        textEl.textContent = 'Unnamed Note'
-    }
+    textEl.textContent = note.title.length > 0 ? note.title : 'Unnamed Note'
 
     noteEl.appendChild(textEl)
 
